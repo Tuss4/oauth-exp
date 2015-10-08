@@ -126,6 +126,11 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%Y-%m-%dT%H:%M:%S.%fZ',
 }
 
+# Facebook stuff
+FB_CLIENT_ID = os.getenv('FB_CLIENT_ID')
+FB_SECRET = os.getenv('FB_SECRET')
+FB_REDIRECT_URI = "https://2a3e3a1c.ngrok.io/v1/fbcallback/"
+
 CORS_ORIGIN_REGEX_WHITELIST = (
     '^(https?://)?(\w+\.)?vokal\.io$',
     '^(https?://)?(\w+\.)?ngrok\.io$',
