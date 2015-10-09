@@ -31,9 +31,9 @@ class Client(object):
             self.base_url, client_id=self.client_id, redirect_uri=self.redirect_uri,
             scope=self.scope)
 
-    def exchange_token(self, code):
+    def exchange_token(self, code, t_url):
         url = self.build_url(
-            FACEBOOK_URL,
+            t_url,
             client_id=self.client_id,
             redirect_uri=self.redirect_uri,
             client_secret=self.client_secret,
