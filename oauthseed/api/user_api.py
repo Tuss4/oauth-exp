@@ -45,3 +45,12 @@ class FacebookCallBackView(views.APIView):
                 {"detail": "Welcome, {0}".format(r_bod['name'])},
                 status=status.HTTP_200_OK)
         return Response(status=status.HTTP_200_OK)
+
+
+class TwitterCallBackView(views.APIView):
+
+    permission_classes = (AllowAny, )
+
+    def get(self, request, *args, **kwargs):
+        print request.query_params
+        return Response(status=status.HTTP_200_OK)
