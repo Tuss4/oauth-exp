@@ -13,13 +13,18 @@ import requests
 
 FB_CLIENT = Client(
     client_id=settings.FB_CLIENT_ID,
-    client_secret=settings.FB_SECRET,
     redirect_uri=settings.FB_REDIRECT_URI,
     base_url='https://www.facebook.com/dialog/oauth',
-    scope='public_profile'
+    scope='public_profile',
+    client_secret=settings.FB_SECRET,
 )
 
-TW_CLIENT = Client()
+TW_CLIENT = Client(
+    client_id=settings.TW_CLIENT_ID,
+    base_url='https://api.twitter.com/oauth/authorize',
+    need_secret=True,
+    client_secret=settings.TW_SECRET,
+)
 
 
 class LoginView(views.APIView):
@@ -30,6 +35,7 @@ class LoginView(views.APIView):
         serializer = AuthTypeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         auth_type = serializer.data.get('auth_type')
+        print auth_type
         if auth_type == 'fb':
             url = FB_CLIENT.get_authorize_url()
             return HttpResponseRedirect(url)
@@ -62,5 +68,5 @@ class TwitterCallBackView(views.APIView):
     permission_classes = (AllowAny, )
 
     def get(self, request, *args, **kwargs):
-        print request.query_params
+        print "QUERY PARAMS:", request.query_params
         return Response(status=status.HTTP_200_OK)

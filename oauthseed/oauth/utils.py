@@ -10,10 +10,12 @@ class Client(object):
     """
     The OAuth Client
     """
-    def __init__(self, client_id=None, redirect_uri=None, base_url=None, **kwargs):
+    def __init__(self, client_id=None, redirect_uri=None,
+                 base_url=None, need_secret=False, **kwargs):
         self.client_id = client_id
         self.redirect_uri = redirect_uri
         self.base_url = base_url
+        self.need_secret = need_secret
         if 'client_secret' in kwargs:
             self.client_secret = kwargs['client_secret']
         if 'scope' in kwargs:
@@ -27,9 +29,20 @@ class Client(object):
         return urlparse.urlunparse(parts)
 
     def get_authorize_url(self):
-        return self.build_url(
-            self.base_url, client_id=self.client_id, redirect_uri=self.redirect_uri,
-            scope=self.scope)
+        if self.redirect_uri and self.scope:
+            return self.build_url(
+                self.base_url, client_id=self.client_id, redirect_uri=self.redirect_uri,
+                scope=self.scope)
+        if self.redirect_uri:
+            return self.build_url(
+                self.base_url, client_id=self.client_id, redirect_uri=self.redirect_uri)
+        if hasattr(self, 'scope'):
+            return self.build_url(
+                self.base_url, client_id=self.client_id, scope=self.scope)
+        if self.need_secret:
+            return self.build_url(
+                self.base_url, client_id=self.client_id, client_secret=self.client_secret)
+        return self.build_url(self.base_url, client_id=self.client_id)
 
     def exchange_token(self, code, t_url):
         url = self.build_url(

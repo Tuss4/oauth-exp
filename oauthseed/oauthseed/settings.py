@@ -131,6 +131,11 @@ FB_CLIENT_ID = os.getenv('FB_CLIENT_ID')
 FB_SECRET = os.getenv('FB_SECRET')
 FB_REDIRECT_URI = "https://ae5e29b3.ngrok.io/v1/fbcallback/"
 
+# Twitter stuff
+TW_CLIENT_ID = os.getenv('TW_CLIENT_ID')
+TW_SECRET = os.getenv('TW_SECRET')
+TW_REDIRECT_URI = "https://ae5e29b3.ngrok.io/v1/twcallback/"
+
 CORS_ORIGIN_REGEX_WHITELIST = (
     '^(https?://)?(\w+\.)?vokal\.io$',
     '^(https?://)?(\w+\.)?ngrok\.io$',
