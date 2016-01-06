@@ -136,4 +136,5 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     ),
     'DATETIME_FORMAT': '%Y-%m-%dT%H:%M:%S.%fZ',
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
