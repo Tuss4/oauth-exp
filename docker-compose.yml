@@ -1,17 +1,17 @@
 db:
-  image: postgres
-  ports:
-    - "5432:5432"
+  image: postgres:9.4
+  environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
 api:
-  build: .
-  command: python manage.py runserver 0.0.0.0:8000
-  ports:
-    - "5000:8000"
-  volumes:
-    - .:/code:rw
-  links:
-    - db
-  environment:
-    DEBUG: True
-    SECRET_KEY: y0urs3cr3tK3y
+    extends:
+        file: dcenv/common.yml
+        service: api
+    command: python3 manage.py runserver 0.0.0.0:5000
+    volumes:
+        - .:/code:rw
+    links:
+        - db
+    env_file:
+        - ./dcenv/dev.txt
