@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', False)
+DEBUG = True if os.getenv('DEBUG') in ['true', 'True'] else False
 
 ALLOWED_HOSTS = []
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework.authtoken',
     'usr',
+    'fbexample',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -126,6 +127,9 @@ AUTH_USER_MODEL = 'usr.User'
 
 # Rest Framework settings
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
@@ -137,4 +141,13 @@ REST_FRAMEWORK = {
     ),
     'DATETIME_FORMAT': '%Y-%m-%dT%H:%M:%S.%fZ',
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'PAGINATE_BY': 20,
+    'PAGE_SIZE': 20,
+    'DEFAULT_PAGINATION_SERIALIZER_CLASS': (
+        'rest_framework.pagination.PaginationSerializer',
+    )
 }
+
+# Example Facebook Settings
+FACEBOOK_CLIENT_ID = os.getenv('FB_CLIENT_ID')
+FACEBOOK_CLIENT_SECRET = os.getenv('FB_SECRET')

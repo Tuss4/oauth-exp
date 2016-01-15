@@ -17,11 +17,16 @@ from django.conf.urls import url
 from django.contrib import admin
 from rest_framework import routers
 
-from usr.api import RegistrationViewSet
+from usr.api import RegistrationViewSet, UserViewSet, LoginViewSet
+from fbexample.api import FacebookLoginViewSet, FacebookCallbackViewSet
 
 router = routers.SimpleRouter()
 router.trailing_slash = '/?'
 router.register(r'v1/user', RegistrationViewSet, base_name='user')
+router.register(r'v1/user', LoginViewSet, base_name='user')
+router.register(r'v1/user', UserViewSet, base_name='user')
+router.register(r'v1/fb', FacebookLoginViewSet, base_name='fb')
+router.register(r'v1/fb', FacebookCallbackViewSet, base_name='fb')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
