@@ -5,16 +5,15 @@ class OauthBackend(object):
 
     """Used to authenticate the OAuth User."""
 
-    def authenticate(self, token=None, service=''):
+    def authenticate(self, fb_id=None, service=''):
         # Check the token and return a user.
         model = None
         if service == 'fb':
             model = FBToken
         print("MODEL:", model)
-        if token is not None:
-            print(token)
+        if fb_id is not None:
             try:
-                at = model.objects.get(access_token=token)
+                at = model.objects.get(facebook_id=db_id)
                 print(at)
                 return at.user
             except model.DoesNotExist:

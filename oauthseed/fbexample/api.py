@@ -58,4 +58,4 @@ class FacebookCallbackViewSet(viewsets.GenericViewSet):
             r = OrderedDict()
             r['id'] = u.pk
             r['token'] = u.auth_token.key
-            return Response(r, status=status.HTTP_200_OK)
+            return Response(r, status=status.HTTP_201_CREATED)
