@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 
@@ -25,10 +25,10 @@ router.trailing_slash = '/?'
 router.register(r'v1/user', RegistrationViewSet, base_name='user')
 router.register(r'v1/user', LoginViewSet, base_name='user')
 router.register(r'v1/user', UserViewSet, base_name='user')
-router.register(r'v1/fb', FacebookLoginViewSet, base_name='fb')
-router.register(r'v1/fb', FacebookCallbackViewSet, base_name='fb')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^v1/', include('fbexample.urls'))
 ]
+
 urlpatterns += router.urls
