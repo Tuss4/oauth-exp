@@ -10,15 +10,16 @@ from oauth.auth import OauthBackend
 import requests
 from collections import OrderedDict
 from .models import FBToken
+from .utils import get_scope_params, get_fields_params
 
 
 # TODO: retrieve scope from settings.
 FB_CLIENT = OauthClient(
     "{0}={1}&scope={2}&redirect_uri={3}".format(
         "https://www.facebook.com/dialog/oauth?client_id", settings.FACEBOOK_CLIENT_ID,
-        "email", "https://8ac98ee6.ngrok.io/v1/fb/callback/"
+        get_scope_params(), "https://8ac98ee6.ngrok.io/v1/fb/callback/"
     ),
-    "graph.facebook.com/v2.5/oauth/access_token"
+    settings.FACEBOOK_EXCHANGE_URL
 )
 
 
@@ -45,7 +46,7 @@ class FacebookCallbackViewSet(viewsets.GenericViewSet):
         # TODO: Maybe get the scope fields from a settings variable.
         profile = FB_CLIENT.get_profile(
             "graph.facebook.com/v2.5/me",
-            "fields=email,first_name,last_name&access_token={}".format(at))
+            "fields={0}&access_token={1}".format(get_fields_params, at))
         try:
             fb = FBToken.objects.get(facebook_id=profile['id'])
             r = OrderedDict()

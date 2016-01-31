@@ -151,3 +151,9 @@ REST_FRAMEWORK = {
 # Example Facebook Settings
 FACEBOOK_CLIENT_ID = os.getenv('FB_CLIENT_ID')
 FACEBOOK_CLIENT_SECRET = os.getenv('FB_SECRET')
+FACEBOOK_EXCHANGE_URL = os.getenv(
+    'FB_EXCHANGE_URL', "graph.facebook.com/v2.5/oauth/access_token")
+# The permissions your app asks facebook for.
+FACEBOOK_SCOPE = ["email"]
+# The fields you need for your user model.
+FACEBOOK_PROFILE_FIELDS = ["email", "first_name", "last_name"]
