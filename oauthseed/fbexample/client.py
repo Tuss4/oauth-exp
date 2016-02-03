@@ -8,7 +8,7 @@ from oauth.utils import get_callback_url
 FB_CLIENT = OauthClient(
     "{0}={1}&scope={2}&redirect_uri={3}".format(
         "https://www.facebook.com/dialog/oauth?client_id", settings.FACEBOOK_CLIENT_ID,
-        get_scope_params(), get_callback_url('/fb/callback/')
+        get_scope_params(), get_callback_url(settings.CALLBACK_ENDPOINT)
     ),
     settings.FACEBOOK_EXCHANGE_URL
 )

@@ -159,3 +159,4 @@ FACEBOOK_SCOPE = ["email"]
 FACEBOOK_PROFILE_FIELDS = ["email", "first_name", "last_name"]
 # OAUTH Settings
 CALLBACK_HOST = os.getenv('CALLBACK_HOST', 'http://example.com')
+CALLBACK_ENDPOINT = '/fb/callback/'
