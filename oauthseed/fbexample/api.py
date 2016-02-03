@@ -1,39 +1,30 @@
-from rest_framework import viewsets, status
-from rest_framework.decorators import list_route
+from rest_framework import views, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.shortcuts import HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from oauth.client import OauthClient
-from oauth.auth import OauthBackend
-import requests
+from django.core.urlresolvers import reverse
 from collections import OrderedDict
+from oauth.client import OauthClient
 from .models import FBToken
-from .utils import get_scope_params, get_fields_params
+from .client import FB_CLIENT
+from .utils import get_fields_params
 
 
-# TODO: retrieve scope from settings.
-FB_CLIENT = OauthClient(
-    "{0}={1}&scope={2}&redirect_uri={3}".format(
-        "https://www.facebook.com/dialog/oauth?client_id", settings.FACEBOOK_CLIENT_ID,
-        get_scope_params(), "https://8ac98ee6.ngrok.io/v1/fb/callback/"
-    ),
-    settings.FACEBOOK_EXCHANGE_URL
-)
+class FacebookLoginView(views.APIView):
 
+    permission_classes = (AllowAny, )
 
-class FacebookLoginViewSet(viewsets.GenericViewSet):
-
-    @list_route(methods=['GET'], permission_classes=[AllowAny])
-    def login(self, request):
+    def get(self, request):
         return HttpResponseRedirect(FB_CLIENT.redirect_url)
 
 
-class FacebookCallbackViewSet(viewsets.GenericViewSet):
+class FacebookCallbackView(views.APIView):
 
-    @list_route(methods=['GET'], permission_classes=[AllowAny])
-    def callback(self, request, *args, **kwargs):
+    permission_classes = (AllowAny, )
+
+    def get(self, request, *args, **kwargs):
         code = request.query_params.get('code')
         if not code:
             return Response(

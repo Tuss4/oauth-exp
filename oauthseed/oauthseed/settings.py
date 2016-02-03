@@ -157,3 +157,5 @@ FACEBOOK_EXCHANGE_URL = os.getenv(
 FACEBOOK_SCOPE = ["email"]
 # The fields you need for your user model.
 FACEBOOK_PROFILE_FIELDS = ["email", "first_name", "last_name"]
+# OAUTH Settings
+CALLBACK_HOST = os.getenv('CALLBACK_HOST', 'http://example.com')

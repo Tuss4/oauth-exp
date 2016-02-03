@@ -1,9 +1,8 @@
 from django.conf.urls import url
-from rest_framework import routers
-from .api import FacebookLoginViewSet, FacebookCallbackViewSet
+from .api import FacebookLoginView, FacebookCallbackView
 
-router = routers.SimpleRouter()
-router.trailing_slash = '/?'
-router.register(r'fb', FacebookLoginViewSet, base_name='fb')
-router.register(r'fb', FacebookCallbackViewSet, base_name='fb')
-urlpatterns = router.urls
+
+urlpatterns = [
+    url(r'^login/?$', FacebookLoginView.as_view(), name='fb-login'),
+    url(r'^callback/?$', FacebookCallbackView.as_view(), name='fb-callback')
+]

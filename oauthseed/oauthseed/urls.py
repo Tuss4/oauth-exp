@@ -18,7 +18,6 @@ from django.contrib import admin
 from rest_framework import routers
 
 from usr.api import RegistrationViewSet, UserViewSet, LoginViewSet
-from fbexample.api import FacebookLoginViewSet, FacebookCallbackViewSet
 
 router = routers.SimpleRouter()
 router.trailing_slash = '/?'
@@ -28,7 +27,7 @@ router.register(r'v1/user', UserViewSet, base_name='user')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^v1/', include('fbexample.urls'))
+    url(r'^fb/', include('fbexample.urls'))
 ]
 
 urlpatterns += router.urls

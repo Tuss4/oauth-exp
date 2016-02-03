@@ -20,6 +20,7 @@ class OAuthTest(APITestCase):
 
     def setUp(self):
         self.fb_callback_url = reverse('fb-callback')
+        # print(self.fb_callback_url)
 
     def test_fb_login(self):
         url = reverse('fb-login')
