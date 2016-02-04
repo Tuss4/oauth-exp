@@ -36,7 +36,7 @@ class FacebookCallbackView(views.APIView):
         at = FB_CLIENT.exchange(query)
         profile = FB_CLIENT.get_profile(
             "graph.facebook.com/v2.5/me",
-            "fields={0}&access_token={1}".format(get_fields_params, at))
+            "fields={0}&access_token={1}".format(get_fields_params(), at))
         try:
             fb = FBToken.objects.get(facebook_id=profile['id'])
             r = OrderedDict()
