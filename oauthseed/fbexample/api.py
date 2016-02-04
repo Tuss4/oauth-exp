@@ -34,7 +34,6 @@ class FacebookCallbackView(views.APIView):
             settings.FACEBOOK_CLIENT_SECRET, code
         )
         at = FB_CLIENT.exchange(query)
-        # TODO: Maybe get the scope fields from a settings variable.
         profile = FB_CLIENT.get_profile(
             "graph.facebook.com/v2.5/me",
             "fields={0}&access_token={1}".format(get_fields_params, at))
@@ -45,9 +44,8 @@ class FacebookCallbackView(views.APIView):
             r['token'] = fb.user.auth_token.key
             return Response(r, status=status.HTTP_200_OK)
         except FBToken.DoesNotExist:
-            u = get_user_model().objects.create_fb_user(
-                email=profile['email'], fb_id=profile['id'], token=at,
-                fname=profile['first_name'], lname=profile['last_name'])
+            user_kwargs = {pf: profile.get(pk) for pf in settings.FACEBOOK_PROFILE_FIELDS}
+            u = FBToken.create_fb_user(profile['id'], at, **user_kwargs)
             r = OrderedDict()
             r['id'] = u.pk
             r['token'] = u.auth_token.key

@@ -13,8 +13,6 @@ class OauthClient(object):
     def __init__(self, redirect_url, exchange_url):
         self.redirect_url = redirect_url
         self.exchange_url = exchange_url
-    # TODO: Raise a different type of exception instead of an assert.
-    # Exchanges the code received
     # Building the URL based off the documentation for urlunparse convenience attributes in:
     # https://docs.python.org/3/library/urllib.parse.html#urllib.parse.urlparse
 

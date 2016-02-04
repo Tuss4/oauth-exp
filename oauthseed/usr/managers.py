@@ -18,11 +18,3 @@ class UserManager(BaseUserManager):
         user.is_admin = True
         user.save(using=self._db)
         return user
-
-    def create_fb_user(self, email, fb_id, token, password=None, fname='', lname=''):
-        user = self.create_user(email, password)
-        user.first_name = fname
-        user.last_name = lname
-        user.save(using=self._db)
-        FBToken.objects.create(user=user, facebook_id=fb_id, access_token=token)
-        return user
