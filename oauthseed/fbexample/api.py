@@ -6,7 +6,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from collections import OrderedDict
-from oauth.client import OauthClient
 from .models import FBToken
 from .client import FB_CLIENT
 from .utils import get_fields_params
@@ -41,12 +40,20 @@ class FacebookCallbackView(views.APIView):
             fb = FBToken.objects.get(facebook_id=profile['id'])
             r = OrderedDict()
             r['id'] = fb.user.pk
-            r['token'] = fb.user.auth_token.key
+            r[fb.user.USERNAME_FIELD] = getattr(fb.user, fb.user.USERNAME_FIELD)
+            try:
+                r['token'] = fb.user.auth_token.key
+            except Exception:
+                r['token'] = None
             return Response(r, status=status.HTTP_200_OK)
         except FBToken.DoesNotExist:
             user_kwargs = {pf: profile.get(pf) for pf in settings.FACEBOOK_PROFILE_FIELDS}
             u = FBToken.objects.create_fb_user(profile['id'], at, **user_kwargs)
             r = OrderedDict()
             r['id'] = u.pk
-            r['token'] = u.auth_token.key
+            r[u.USERNAME_FIELD] = getattr(u, u.USERNAME_FIELD)
+            try:
+                r['token'] = u.auth_token.key
+            except Exception:
+                r['token'] = None
             return Response(r, status=status.HTTP_201_CREATED)

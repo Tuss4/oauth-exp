@@ -17,3 +17,8 @@ def get_scope_params():
 # Return the profile fields params.
 def get_fields_params():
     return join_params(settings.FACEBOOK_PROFILE_FIELDS)
+
+
+# Return callback url.
+def get_callback_url(url):
+    return ''.join([settings.CALLBACK_HOST, url])
