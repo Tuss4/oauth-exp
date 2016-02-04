@@ -5,8 +5,8 @@ from fbexample.models import FBToken
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, email, password=None):
-        user = self.model(email=email.lower())
+    def create_user(self, email, password=None, **kwargs):
+        user = self.model(email=email.lower(), **kwargs)
         if password:
             user.set_password(password)
         user.save(using=self._db)

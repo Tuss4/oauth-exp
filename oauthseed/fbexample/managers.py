@@ -7,6 +7,7 @@ class FBManager(models.Manager):
     """Manager method to create a Facebook User"""
 
     def create_fb_user(self, fb_id, token, **kwargs):
-        user = get_user_model().objects.create(**kwargs)
-        FBToken.objects.create(user=user, facebook_id=fb_id, access_token=token)
+        user = get_user_model().objects.create_user(**kwargs)
+        fbt = self.model(user=user, facebook_id=fb_id, access_token=token)
+        fbt.save(using=self._db)
         return user

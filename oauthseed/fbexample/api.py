@@ -44,8 +44,8 @@ class FacebookCallbackView(views.APIView):
             r['token'] = fb.user.auth_token.key
             return Response(r, status=status.HTTP_200_OK)
         except FBToken.DoesNotExist:
-            user_kwargs = {pf: profile.get(pk) for pf in settings.FACEBOOK_PROFILE_FIELDS}
-            u = FBToken.create_fb_user(profile['id'], at, **user_kwargs)
+            user_kwargs = {pf: profile.get(pf) for pf in settings.FACEBOOK_PROFILE_FIELDS}
+            u = FBToken.objects.create_fb_user(profile['id'], at, **user_kwargs)
             r = OrderedDict()
             r['id'] = u.pk
             r['token'] = u.auth_token.key
