@@ -27,7 +27,7 @@ router.register(r'v1/user', UserViewSet, base_name='user')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^fb/', include('fbexample.urls'))
+    url(r'^fb/', include('fbauth.urls'))
 ]
 
 urlpatterns += router.urls

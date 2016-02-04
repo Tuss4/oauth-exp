@@ -1,6 +1,5 @@
 from django.contrib.auth.models import BaseUserManager
 from rest_framework.authtoken.models import Token
-from fbexample.models import FBToken
 
 
 class UserManager(BaseUserManager):

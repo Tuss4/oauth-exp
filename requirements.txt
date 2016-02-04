@@ -1,6 +1,7 @@
 django==1.9.1
 argparse==1.2.1
 dj-database-url==0.3.0
+django-fb-oauth==1.0.1.dev1
 django-cors-headers==1.1.0
 djangorestframework==3.3.2
 psycopg2==2.6.1
